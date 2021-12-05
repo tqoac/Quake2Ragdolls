@@ -804,7 +804,7 @@ static bool initialized = false;
 	{
 		if (itemlist[i].flags & IT_WEAPON)
 		{
-			itemRegistry reg = {&itemlist[i], i, registry.Count()};
+			itemRegistry reg = {&itemlist[i], i, static_cast<int>(registry.Count())};
 			registry.Add(reg);
 		}
 	}

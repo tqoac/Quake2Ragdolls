@@ -1065,6 +1065,17 @@ public:
 	virtual ~QuakeBodyMotionState()
 	{
 	}
+	
+	// Custom new/delete operators to ensure 16-bit alignment
+	void* operator new(size_t i)
+	{
+		return _mm_malloc(i, 16);
+	}
+
+	void operator delete(void* p)
+	{
+		_mm_free(p);
+	}
 
 	void setNode(edict_t *node)
 	{
@@ -2443,7 +2454,7 @@ void PhysRayCastFull (vec3_t start, vec3_t end, float kick)
 
 	for (int i = 0; i < callback.m_collisionObjects.size(); ++i)
 	{
-		btCollisionObject *obj = callback.m_collisionObjects[i];
+		const btCollisionObject *obj = callback.m_collisionObjects[i];
 
 		if (!obj->isStaticOrKinematicObject())
 		{
